@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SearchAppwithArchitectureComponents</string>
+    <string name="image">image</string>
+    <string name="username">Username</string>
+    <string name="retry">Retry</string>
+    <string name="empty_text">There is no such image</string>
+    <string name="error">Couldn\'t load result</string>
+</resources>
