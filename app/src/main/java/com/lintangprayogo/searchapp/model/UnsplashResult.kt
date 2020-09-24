@@ -10,4 +10,4 @@ data class UnsplashResult(
     val likes: Int,
     val urls: UnsplashUrls,
     val user: User
-):Parcelable
+) : Parcelable
