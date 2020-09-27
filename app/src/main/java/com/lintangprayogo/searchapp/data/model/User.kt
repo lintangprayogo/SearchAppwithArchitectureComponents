@@ -1,4 +1,4 @@
-package com.lintangprayogo.searchapp.model
+package com.lintangprayogo.searchapp.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
