@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class UnsplashResult(
+    val id: String,
     val alt_description: String,
     val description: String,
     val likes: Int,

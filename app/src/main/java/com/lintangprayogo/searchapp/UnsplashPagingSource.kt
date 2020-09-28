@@ -1,5 +1,6 @@
 package com.lintangprayogo.searchapp
 
+import android.util.Log
 import androidx.paging.PagingSource
 import com.lintangprayogo.searchapp.data.model.UnsplashResult
 import com.lintangprayogo.searchapp.network.UnsplashApi
@@ -23,7 +24,6 @@ class UnsplashPagingSource(private val service: UnsplashApi, private val query: 
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
-
         } catch (e: HttpException) {
             LoadResult.Error(e)
         }
