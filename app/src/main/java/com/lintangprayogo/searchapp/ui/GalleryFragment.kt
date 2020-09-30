@@ -26,7 +26,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         binding.apply {
             rvSplash.setHasFixedSize(true)
-            rvSplash.adapter=adapter
+            rvSplash.adapter=adapter.withLoadStateHeaderAndFooter(
+                header= UnsplashResultLoadStateAdapter{adapter.retry()},
+                footer = UnsplashResultLoadStateAdapter{adapter.retry()}
+            )
         }
 
         viewModel.results().observe(viewLifecycleOwner) {
