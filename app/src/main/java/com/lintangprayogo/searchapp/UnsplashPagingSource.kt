@@ -1,6 +1,5 @@
 package com.lintangprayogo.searchapp
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.lintangprayogo.searchapp.data.model.UnsplashResult
 import com.lintangprayogo.searchapp.network.UnsplashApi

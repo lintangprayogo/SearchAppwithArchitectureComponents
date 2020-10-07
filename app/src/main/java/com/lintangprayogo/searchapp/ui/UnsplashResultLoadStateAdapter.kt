@@ -6,35 +6,37 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.lintangprayogo.searchapp.R
 import com.lintangprayogo.searchapp.databinding.UnsplashLoadItemBinding
 
-class UnsplashResultLoadStateAdapter(private  val retry:()->Unit):LoadStateAdapter<UnsplashResultLoadStateAdapter.LoadViewHolder>() {
+class UnsplashResultLoadStateAdapter(private val retry: () -> Unit) :
+    LoadStateAdapter<UnsplashResultLoadStateAdapter.LoadViewHolder>() {
 
-    inner class LoadViewHolder(private val binding:UnsplashLoadItemBinding):RecyclerView.ViewHolder(binding.root){
+    inner class LoadViewHolder(private val binding: UnsplashLoadItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
             binding.buttonRetry.setOnClickListener {
-              retry.invoke()
+                retry.invoke()
             }
         }
-        fun bind(loadState: LoadState){
+
+        fun bind(loadState: LoadState) {
             binding.apply {
-              progressBar.isVisible = loadState is LoadState.Loading
-              buttonRetry.isVisible = loadState !is LoadState.Loading
-              tvError.isVisible = loadState !is  LoadState.Loading
+                progressBar.isVisible = loadState is LoadState.Loading
+                buttonRetry.isVisible = loadState !is LoadState.Loading
+                tvError.isVisible = loadState !is LoadState.Loading
             }
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadViewHolder {
-        val binding = UnsplashLoadItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return  LoadViewHolder(binding)
+        val binding =
+            UnsplashLoadItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LoadViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: LoadViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }
-
-
-
 
 
 }

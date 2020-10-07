@@ -10,13 +10,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.lintangprayogo.searchapp.R
+import com.lintangprayogo.searchapp.data.model.UnsplashResult
 import com.lintangprayogo.searchapp.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+class GalleryFragment : Fragment(R.layout.fragment_gallery),UnsplashAdapter.OnItemUnsplashClickListener {
     private val viewModel by viewModels<GalleryViewModel>()
 
     private var _binding: FragmentGalleryBinding? = null
@@ -27,7 +29,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         _binding = FragmentGalleryBinding.bind(view)
 
-        val adapter = UnsplashAdapter()
+        val adapter = UnsplashAdapter(this)
 
         binding.apply {
             rvSplash.setHasFixedSize(true)
@@ -47,21 +49,21 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
 
         adapter.addLoadStateListener { loadstate ->
-                binding.apply {
-                    progressBar.isVisible = loadstate.source.refresh is LoadState.Loading
-                    rvSplash.isVisible = loadstate.source.refresh is LoadState.NotLoading
-                    btnRetry.isVisible = loadstate.source.refresh is LoadState.Error
-                    tvError.isVisible = loadstate.source.refresh is LoadState.Error
+            binding.apply {
+                progressBar.isVisible = loadstate.source.refresh is LoadState.Loading
+                rvSplash.isVisible = loadstate.source.refresh is LoadState.NotLoading
+                btnRetry.isVisible = loadstate.source.refresh is LoadState.Error
+                tvError.isVisible = loadstate.source.refresh is LoadState.Error
 
 
-                    if (loadstate.source.refresh is LoadState.NotLoading && loadstate.append.endOfPaginationReached && adapter.itemCount<1){
-                        rvSplash.isVisible = false
-                        tvEmpty.isVisible  =true
-                    }else {
-                        tvEmpty.isVisible  =false
-                    }
-
+                if (loadstate.source.refresh is LoadState.NotLoading && loadstate.append.endOfPaginationReached && adapter.itemCount < 1) {
+                    rvSplash.isVisible = false
+                    tvEmpty.isVisible = true
+                } else {
+                    tvEmpty.isVisible = false
                 }
+
+            }
         }
         setHasOptionsMenu(true)
     }
@@ -94,5 +96,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(result: UnsplashResult) {
+        val action= GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(result)
+        findNavController().navigate(action)
+
     }
 }

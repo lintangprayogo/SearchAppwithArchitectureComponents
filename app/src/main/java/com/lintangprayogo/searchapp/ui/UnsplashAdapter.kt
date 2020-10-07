@@ -1,6 +1,5 @@
 package com.lintangprayogo.searchapp.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -12,11 +11,25 @@ import com.lintangprayogo.searchapp.R
 import com.lintangprayogo.searchapp.data.model.UnsplashResult
 import com.lintangprayogo.searchapp.databinding.ImageItemBinding
 
-class UnsplashAdapter : PagingDataAdapter<UnsplashResult, UnsplashAdapter.ResultViewHolder>(
-    RESULT_COMPARATOR
-) {
-    inner class ResultViewHolder(private val binding:ImageItemBinding) :
+class UnsplashAdapter(private val listener: OnItemUnsplashClickListener) :
+    PagingDataAdapter<UnsplashResult, UnsplashAdapter.ResultViewHolder>(
+        RESULT_COMPARATOR
+    ) {
+    inner class ResultViewHolder(private val binding: ImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val result = getItem(position)
+                    if (result != null) {
+                        listener.onItemClick(result)
+                    }
+                }
+
+            }
+        }
+
         fun bind(result: UnsplashResult) {
             binding.apply {
                 Glide.with(splashImage)
@@ -29,6 +42,10 @@ class UnsplashAdapter : PagingDataAdapter<UnsplashResult, UnsplashAdapter.Result
                 tvUsername.text = result.user.username
             }
         }
+    }
+
+    interface OnItemUnsplashClickListener {
+        fun onItemClick(result: UnsplashResult)
     }
 
     companion object {

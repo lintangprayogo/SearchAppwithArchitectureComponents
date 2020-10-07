@@ -8,5 +8,18 @@
         android:id="@+id/galleryFragment"
         android:name="com.lintangprayogo.searchapp.ui.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.lintangprayogo.searchapp.ui.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="result"
+            app:argType="com.lintangprayogo.searchapp.data.model.UnsplashResult" />
+    </fragment>
 </navigation>
